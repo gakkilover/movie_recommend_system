@@ -1,0 +1,58 @@
+# Tomcat
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8082
+  servlet:
+    context-path: /movie-recommend-api
+
+# 启用文件
+spring:
+  profiles:
+    active: dev
+
+  # redis 缓存配置
+  redis:
+    database: 0
+    host: 192.168.83.128
+    port: 6379
+    password:       # 密码（默认为空）
+    timeout: 600000  # 连接超时时长（毫秒）
+    block-when-exhausted : true
+    jedis:
+      pool:
+        max-active: 2000  # 连接池最大连接数（使用负值表示没有限制）
+        max-wait: 3000    # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 500      # 连接池中的最大空闲连接
+        min-idle: 100      # 连接池中的最小空闲连接
+        block-when-exhausted : true
+
+bss:
+  redis:
+    open: true  # 是否开启redis缓存  true开启   false关闭
+
+
+#mybatis-plus
+mybatis-plus:
+  #mapper配置文件扫描
+  mapper-locations: classpath:mapper/**/*.xml
+  #实体类包扫描路径
+  type-aliases-package: com.zwk.movie_recommend.entity
+  #全局通用配置
+  global-config:
+    #主键类型   0："数据库主键自增"， 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
+    id-type: 1
+    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+    field-strategy: 2
+    #驼峰下划线转换
+    db-column-underline: true
+    #刷新mapper 调试神器
+    refresh-mapper: true
+    #数据库大写下划线转换
+    #capital-mode: true
+  configuration:
+      mapUnderscoreToCamelCase: true
+      cache-enabled: false
+      call-setters-on-nulls: true
