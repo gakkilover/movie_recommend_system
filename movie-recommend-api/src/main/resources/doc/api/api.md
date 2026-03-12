@@ -1,0 +1,257 @@
+# 电影推荐系统API文档
+
+## 概述
+本文档描述了电影推荐系统的RESTful API接口，所有接口基于HTTP协议，采用JSON格式进行数据交换。
+
+## 基础信息
+- **基础URL**: `/` (相对于应用根路径)
+- **数据格式**: JSON
+- **字符编码**: UTF-8
+- **请求方法**: GET, POST
+- **响应格式**: 统一返回 `ResultView` 对象
+
+## 通用响应格式
+所有API接口统一返回以下格式的JSON响应：
+```json
+{
+  "status": 200,
+  "message": "成功提示信息",
+  "data": {/* 实际数据内容 */}
+}
+```
+
+其中：
+- `status`: HTTP状态码，200表示成功，其他表示失败
+- `message`: 提示信息
+- `data`: 返回的实际数据，可为对象、数组或基本类型
+
+## 认证机制
+部分接口需要用户登录后才能访问，通过以下方式进行身份验证：
+1. 用户登录成功后，服务器在Session中存储用户信息
+2. 后续请求通过Session维持登录状态
+3. 部分接口会检查Session中的`user`或`userId`属性
+
+## 接口列表
+
+### 用户相关接口
+#### 用户控制器 (UserController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/page/login` | GET | 跳转到登录界面 | 否 |
+| `/customer/login` | POST | 用户登录 | 否 |
+| `/customer/logout` | GET | 用户退出登录 | 是 |
+| `/home` | GET | 跳转到主页 | 否 |
+| `/customer/register/movieSubmit` | POST | 新用户选择喜欢的电影 | 否 (需要session中有userId) |
+| `/updateUser` | POST | 更新用户个人信息 | 是 |
+| `/editUser` | GET | 获取用户信息用于编辑 | 是 |
+| `/profile` | GET | 跳转到个人中心页面 | 是 |
+| `/customer/profile` | POST | 获取个人中心数据 | 是 |
+
+### 电影相关接口
+#### 电影控制器 (MovieController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/search` | POST | 按名称搜索电影 | 否 |
+
+#### 客户控制器 (CustomerController) - 电影相关
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/homepage` | GET | 显示个性化主页推荐 | 是 |
+| `/index` | GET | 显示电影索引页（所有分类和电影） | 否 |
+| `/Customer/Description` | POST | 电影详情传值（点击电影后处理） | 是（部分逻辑需要） |
+| `/MovieDescription` | GET | 显示电影详情界面 | 否 |
+| `/loadingmore` | POST | 通过类型标签加载更多电影 | 否 |
+| `/typesortmovie` | POST | 按类型和排序方式获取电影 | 否 |
+| `/getstar` | POST | 电影评星和评论 | 是 |
+| `/getSimiMovies` | POST | 获取相似电影 | 否 |
+| `/likedmovie` | POST | 用户喜欢电影（收藏） | 是 |
+
+### 标签相关接口
+#### 标签控制器 (TagController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/tag/tagList` | GET | 查询所有电影标签 | 否 |
+
+### 注册相关接口
+#### 注册控制器 (RegisterController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/customer/register` | GET | 进入注册页面 | 否 |
+| `/customer/check/{param}/{type}` | GET | 检查用户名/邮箱是否符合规范 | 否 |
+| `/customer/checkboth/{paramName}/{paramEmail}/{type}` | GET | 检查用户名和邮箱 | 否 |
+| `/customer/register` | POST | 用户注册 | 否 |
+| `/sendCode` | POST | 发送手机验证码 | 否 |
+
+### 用户标签相关接口
+#### 用户标签控制器 (UserTagController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/likedTags` | POST | 用户注册完成，选择喜欢的电影标签 | 是 |
+
+## 详细接口说明
+
+### 用户登录
+**路径**: `/customer/login`  
+**方法**: POST  
+**参数**:
+- `userName` (String): 用户名
+- `userPassword` (String): 密码  
+**返回**: ResultView对象，成功时data包含UserEntity
+
+### 电影搜索
+**路径**: `/search`  
+**方法**: POST  
+**参数**:
+- `search_text` (String): 电影名称搜索关键词  
+**返回**: ResultView对象，data包含MovieEntity列表（前10条）
+
+### 用户评分电影
+**路径**: `/getstar`  
+**方法**: POST  
+**参数**:
+- `userId` (Long): 用户ID
+- `movieId` (Long): 电影ID
+- `star` (Double): 评分星级
+- `commentDescription` (String): 评论内容
+- `time` (String): 评论时间，格式为"yyyy-MM-dd HH:mm:ss"  
+**返回**: 成功返回"success"字符串
+
+### 获取相似电影
+**路径**: `/getSimiMovies`  
+**方法**: POST  
+**参数**:
+- `id` (Long): 电影ID  
+**返回**: ResultView对象，data包含相似MovieEntity列表
+
+### 用户喜欢电影（收藏）
+**路径**: `/likedmovie`  
+**方法**: POST  
+**参数**:
+- `movieId` (String): 电影ID
+- `userId` (Long): 用户ID
+- `boollike` (Integer): 是否喜欢标志  
+**返回**: 成功返回"success"字符串
+
+### 获取电影标签列表
+**路径**: `/tag/tagList`  
+**方法**: GET  
+**参数**: 无  
+**返回**: ResultView对象，data包含TagEntity列表
+
+### 获取个性化主页推荐
+**路径**: `/homepage`  
+**方法**: GET  
+**参数**: 无（从Session获取用户信息）  
+**返回**: 视图名称"Home"，同时设置Session属性：
+- `TopDefaultMovie`: 推荐电影列表
+- `TopDefaultMovieMap`: 电影ID到索引的映射JSON字符串
+
+### 用户注册
+**路径**: `/customer/register`  
+**方法**: GET  
+**描述**: 进入注册页面，会设置Session属性：
+- `TopRegDefaultMovie`: 默认推荐电影列表
+- `tagList`: 电影标签列表  
+**返回**: 视图名称"register"
+
+### 检查用户名/邮箱
+**路径**: `/customer/check/{param}/{type}`  
+**方法**: GET  
+**参数**:
+- `param` (String): 要检查的参数值（用户名或邮箱）
+- `type` (Integer): 检查类型（1为用户名，2为邮箱）  
+**返回**: ResultView对象
+
+### 检查用户名和邮箱
+**路径**: `/customer/checkboth/{paramName}/{paramEmail}/{type}`  
+**方法**: GET  
+**参数**:
+- `paramName` (String): 用户名
+- `paramEmail` (String): 邮箱
+- `type` (Integer): 检查类型  
+**返回**: ResultView对象
+
+### 执行用户注册
+**路径**: `/customer/register`  
+**方法**: POST  
+**参数**:
+- `user` (UserEntity): 用户对象（包含用户名、密码、邮箱、手机等信息）
+- `request` (HttpServletRequest): 包含Session中的验证码  
+**返回**: ResultView对象，成功时data包含新注册用户的ID
+
+### 发送手机验证码
+**路径**: `/sendCode`  
+**方法**: POST  
+**参数**:
+- `userPhone` (String): 手机号码  
+**返回**: ResultView对象
+
+### 用户选择喜欢的电影标签
+**路径**: `/likedTags`  
+**方法**: POST  
+**参数**:
+- `tagIds` (String): 标签ID列表（逗号分隔）
+- `userId` (Long): 从Session获取的用户ID  
+**返回**: 成功返回Final.SUCCESS常量
+
+### 电影详情处理
+**路径**: `/Customer/Description`  
+**方法**: POST  
+**参数**:
+- `id` (String): 电影ID  
+**功能**:
+1. 获取电影详情信息（从Redis或数据库）
+2. 处理用户对电影的评星状态
+3. 更新搜索记录
+4. 更新推荐记录
+5. 设置Session属性用于电影详情页面显示  
+**返回**: 成功返回"success"字符串
+
+### 加载更多电影
+**路径**: `/loadingmore`  
+**方法**: POST  
+**参数**:
+- `type` (String): 类型ID
+- `molimit` (String): 限制数量
+- `sort` (String): 排序方式  
+**返回**: ResultView对象，data包含MovieEntity列表
+
+### 按类型和排序获取电影
+**路径**: `/typesortmovie`  
+**方法**: POST  
+**参数**:
+- `type` (String): 类型ID
+- `molimit` (String): 限制数量
+- `sort` (String): 排序方式  
+**返回**: ResultView对象，data包含MovieEntity列表
+
+### 个人中心数据获取
+**路径**: `/customer/profile`  
+**方法**: POST  
+**功能**:
+1. 获取当前用户信息
+2. 获取用户的影评列表
+3. 获取用户喜欢的电影列表
+4. 为影评列表添加电影图片URL
+5. 设置Session属性：
+   - `movies`: 用户喜欢的电影列表
+   - `commentRecordEntities`: 用户的影评列表  
+**返回**: 视图名称"success"
+
+## 错误码说明
+- 200: 成功
+- 400: 请求参数错误（如验证码不正确）
+- 其他状态码: 失败，具体信息参见message字段
+
+## 注意事项
+1. 部分需要用户登录的接口会检查Session中的`user`或`userId`属性，未登录时可能返回错误或重定向到登录页
+2. 所有POST请求参数均通过表单形式提交（application/x-www-form-urlencoded）
+3. 日期时间参数格式请 strictly 遵循指定格式
+4. 长整型(ID)参数请确保在有效范围内
+5. 部分接口会设置Session属性用于页面间数据传递
