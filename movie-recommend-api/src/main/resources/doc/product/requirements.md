@@ -84,13 +84,50 @@
 ## 系统架构
 
 ### 技术栈
-- 后端：Spring Boot框架（版本1.5.x）
-- 数据库：MySQL 5.6+
-- 缓存：Redis 3.0+
-- ORM：MyBatis Plus（增强版MyBatis）
-- API文档：Swagger2
-- 前端：Bootstrap + jQuery + 原生JavaScript
+- 后端：Spring Boot框架（版本1.5.9.RELEASE）
+- 数据库：MySQL 5.7+
+- 缓存：Redis 4.0+
+- ORM：MyBatis Plus 3.0+
+- API文档：Swagger2 2.7.0
+- 前端：Bootstrap 3.3.7 + jQuery 1.12.4 + 原生JavaScript
 - 模板引擎：Spring MVC内置视图解析器（JSP）
+- 构建工具：Maven 3.5+
+- 开发环境：JDK 1.8
+
+### 部署与运维指南
+
+#### 环境要求
+- 开发环境：JDK 1.8, Maven 3.5+, IDE（IntelliJ IDEA/Eclipse）
+- 运行环境：JDK 1.8+, Tomcat 8.0+ 或内嵌Tomcat
+- 依赖服务：MySQL 5.7+, Redis 4.0+
+- 浏览器支持：Chrome 60+, Firefox 55+, Safari 10+, Edge 14+
+
+#### 构建与部署
+1. 克隆代码库：`git clone <repository-url>`
+2. 构建项目：`mvn clean package`
+3. 运行应用：`java -jar target/movie-recommend-api.jar`
+4. 访问地址：http://localhost:8080/
+
+#### 配置说明
+- 主配置文件：src/main/resources/application.properties
+- 数据库配置：jdbc.url, jdbc.username, jdbc.password
+- Redis配置：redis.host, redis.port, redis.password
+- 端口配置：server.port（默认8080）
+- 日志配置：logback.xml或application.properties中的logging配置
+
+#### 运维监控
+- 日志位置：应用根目录下的logs/目录
+- 性能监控：通过Spring Boot Actuator监控接口（/actuator/health等）
+- 常见故障排查：
+  * 数据库连接失败：检查jdbc配置和网络连接
+  * Redis连接失败：检查Redis服务状态和配置
+  * 端口冲突：修改server.port或冲突应用
+  * 内存溢出：调整JVM堆内存大小（-Xmx参数）
+
+#### 数据备份与恢复
+- MySQL备份：使用mysqldump定期备份数据库
+- Redis持久化：开启RDB或AOF持久化机制
+- 应用配置：定期备份application.properties等配置文件
 
 ### 模块划分
 1. 电影推荐API模块（movie-recommend-api）：提供RESTful API接口和页面视图

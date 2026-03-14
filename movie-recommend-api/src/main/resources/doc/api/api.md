@@ -100,9 +100,33 @@
 **路径**: `/customer/login`  
 **方法**: POST  
 **参数**:
-- `userName` (String): 用户名
-- `userPassword` (String): 密码  
-**返回**: ResultView对象，成功时data包含UserEntity
+- `userName` (String): 用户名，必填
+- `userPassword` (String): 密码，必填  
+**返回**: 
+- 成功: ResultView对象，status=200，data包含UserEntity对象
+- 失败: ResultView对象，status非200，message包含错误信息
+**示例**:
+请求:
+```
+POST /customer/login
+Content-Type: application/x-www-form-urlencoded
+userName=john_doe&userPassword=123456
+```
+响应:
+```json
+{
+  "status": 200,
+  "message": "登录成功",
+  "data": {
+    "userId": 123,
+    "userName": "john_doe",
+    "userEmail": "john@example.com",
+    "userSex": 1,
+    "userAge": 28
+  }
+}
+```
+**设置Session属性**: 登录成功后将UserEntity对象存入Session，键为"user"
 
 ### 电影搜索
 **路径**: `/search`  
@@ -115,12 +139,34 @@
 **路径**: `/getstar`  
 **方法**: POST  
 **参数**:
-- `userId` (Long): 用户ID
-- `movieId` (Long): 电影ID
-- `star` (Double): 评分星级
-- `commentDescription` (String): 评论内容
-- `time` (String): 评论时间，格式为"yyyy-MM-dd HH:mm:ss"  
-**返回**: 成功返回"success"字符串
+- `userId` (Long): 用户ID，必填，从Session获取
+- `movieId` (Long): 电影ID，必填
+- `star` (Double): 评分星级，必填，范围1.0-5.0
+- `commentDescription` (String): 评论内容，可选
+- `time` (String): 评论时间，格式为"yyyy-MM-dd HH:mm:ss"，必填  
+**返回**: 
+- 成功: 返回字符串"success"
+- 失败: ResultView对象，status非200，message包含错误信息
+**功能说明**:
+1. 保存用户对电影的评分和评论
+2. 更新电影的平均评分和评分人数
+3. 如果评分>=3.5，触发推荐系统更新用户推荐列表
+4. 同时更新用户的相似电影推荐
+**示例**:
+请求:
+```
+POST /getstar
+Content-Type: application/x-www-form-urlencoded
+userId=123&movieId=456&star=4.5&commentDescription=很好的电影&time=2023-05-20 14:30:00
+```
+响应:
+```
+success
+```
+**设置Session属性**:
+- `userstar`: 当前评分记录对象
+- `flag`: 是否已收藏该电影的布尔值
+- 如果star>3.5，还会设置`TopDefaultMovie`为新的推荐电影列表
 
 ### 获取相似电影
 **路径**: `/getSimiMovies`  
@@ -151,14 +197,16 @@
 **返回**: 视图名称"Home"，同时设置Session属性：
 - `TopDefaultMovie`: 推荐电影列表
 - `TopDefaultMovieMap`: 电影ID到索引的映射JSON字符串
+**说明**: 根据用户登录状态和行为历史生成个性化推荐，已登录用户基于历史推荐和热门电影合并，未登录用户基于搜索历史或直接返回热门电影
 
 ### 用户注册
 **路径**: `/customer/register`  
 **方法**: GET  
 **描述**: 进入注册页面，会设置Session属性：
-- `TopRegDefaultMovie`: 默认推荐电影列表
-- `tagList`: 电影标签列表  
+- `TopRegDefaultMovie`: 默认推荐电影列表（用于新用户选择喜欢的电影）
+- `tagList`: 电影标签列表（用于注册完成后选择感兴趣的标签）  
 **返回**: 视图名称"register"
+**说明**: 此接口仅返回注册页面视图，实际注册逻辑在POST方法中处理
 
 ### 检查用户名/邮箱
 **路径**: `/customer/check/{param}/{type}`  
@@ -181,9 +229,36 @@
 **路径**: `/customer/register`  
 **方法**: POST  
 **参数**:
-- `user` (UserEntity): 用户对象（包含用户名、密码、邮箱、手机等信息）
-- `request` (HttpServletRequest): 包含Session中的验证码  
-**返回**: ResultView对象，成功时data包含新注册用户的ID
+- `user` (UserEntity): 用户对象（包含用户名、密码、邮箱、手机等信息），必填
+  - userName: 用户名
+  - userPassword: 密码
+  - userEmail: 邮箱
+  - userPhone: 手机号码
+- `request` (HttpServletRequest): 包含Session中的验证码，必填  
+**返回**: 
+- 成功: ResultView对象，status=200，data包含新注册用户的ID（Long）
+- 失败: ResultView对象，status非200，message包含错误信息
+**验证流程**:
+1. 检查Session中的验证码是否正确
+2. 验证用户名和邮箱是否已被注册
+3. 保存用户信息到数据库
+4. 将新用户ID存入Session
+**示例**:
+请求:
+```
+POST /customer/register
+Content-Type: application/x-www-form-urlencoded
+userName=new_user&userPassword=secure123&userEmail=new@example.com&userPhone=13800138000
+```
+响应:
+```json
+{
+  "status": 200,
+  "message": "注册成功",
+  "data": 12345
+}
+```
+**设置Session属性**: 注册成功后将userId存入Session，键为"userId"
 
 ### 发送手机验证码
 **路径**: `/sendCode`  
@@ -212,6 +287,12 @@
 4. 更新推荐记录
 5. 设置Session属性用于电影详情页面显示  
 **返回**: 成功返回"success"字符串
+**设置Session属性**:
+- `moviedescription`: 电影详情实体对象
+- `userstar`: 用户对该电影的评分记录(如有)
+- `description`: 评分记录对象
+- `flag`: 是否已收藏该电影的布尔值
+- `booluserunlikedmovie`: 用户是否喜欢该电影的标记
 
 ### 加载更多电影
 **路径**: `/loadingmore`  
@@ -246,7 +327,11 @@
 
 ## 错误码说明
 - 200: 成功
-- 400: 请求参数错误（如验证码不正确）
+- 400: 请求参数错误（如验证码不正确、参数缺失或格式错误）
+- 401: 未授权（需要登录但未提供有效凭据）
+- 403: 禁止访问（权限不足）
+- 404: 资源未找到
+- 500: 服务器内部错误
 - 其他状态码: 失败，具体信息参见message字段
 
 ## 注意事项
