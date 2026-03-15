@@ -17,10 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 
 /**
- * @ Author     ：zwk
- * @ Email      ：zwk0@qq.com
- * @ Date       ：Created in 2019-04-18 11:16
- * @ Description：
+ * @author     ：zwk
+ * @email      ：zwk0@qq.com
+ * @date       ：Created in 2026-03-15 10:00
+ * @description：用户电影标签偏好选择
  */
 @Controller
 public class UserTagController {

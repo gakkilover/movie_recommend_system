@@ -27,7 +27,10 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
 /**
- * Created by ZXL on 2018/3/1.
+ * @author     ：zwk
+ * @email      ：zwk0@qq.com
+ * @date       ：Created in 2026-03-15 10:00
+ * @description：电影推荐、主页、电影详情、评分
  */
 
 @Controller

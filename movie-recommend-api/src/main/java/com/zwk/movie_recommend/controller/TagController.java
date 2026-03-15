@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @ Author     ：zwk
- * @ Email      ：zwk0@qq.com
- * @ Date       ：Created in 2019-04-17 15:51
- * @ Description：
+ * @author     ：zwk
+ * @email      ：zwk0@qq.com
+ * @date       ：Created in 2026-03-15 10:00
+ * @description：电影标签查询
  */
 @Controller
 public class TagController {

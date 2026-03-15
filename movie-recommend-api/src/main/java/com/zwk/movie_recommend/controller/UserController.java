@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * @ Author     ：zwk
- * @ Email      ：zwk0@qq.com
- * @ Date       ：Created in 2019-01-25 14:40
- * @ Description：
+ * @author     ：zwk
+ * @email      ：zwk0@qq.com
+ * @date       ：Created in 2026-03-15 10:00
+ * @description：用户登录、退出、个人信息管理
  */
 @Controller
 @Api(tags = "用户操作》",description = "接口")
