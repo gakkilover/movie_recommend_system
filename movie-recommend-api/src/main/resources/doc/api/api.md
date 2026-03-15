@@ -94,6 +94,30 @@
 |----------|----------|----------|--------------|
 | `/likedTags` | POST | 用户注册完成，选择喜欢的电影标签 | 是 |
 
+### 电影榜单相关接口
+#### 榜单控制器 (RankController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/api/rank/list` | GET | 获取榜单列表 | 否 |
+| `/api/rank/{rankType}` | GET | 根据类型获取榜单 | 否 |
+| `/api/rank/top250` | GET | 获取Top250榜单 | 否 |
+| `/api/rank/monthly` | GET | 获取本月榜单 | 否 |
+| `/api/rank/monthly/{year}/{month}` | GET | 获取指定月份榜单 | 否 |
+| `/api/rank/genre/{genre}` | GET | 获取分类榜单 | 否 |
+
+### 观看状态相关接口（想看/在看/已看）
+#### 观看状态控制器 (WatchStatusController)
+
+| 接口路径 | 请求方法 | 功能描述 | 是否需要登录 |
+|----------|----------|----------|--------------|
+| `/api/watch/setStatus` | POST | 设置观看状态 | 是 |
+| `/api/watch/wishList` | GET | 获取想看列表 | 是 |
+| `/api/watch/watchingList` | GET | 获取在看列表 | 是 |
+| `/api/watch/watchedList` | GET | 获取已看列表 | 是 |
+| `/api/watch/remove` | POST | 移除观看状态 | 是 |
+| `/api/watch/status` | GET | 获取电影观看状态 | 是 |
+
 ## 详细接口说明
 
 ### 用户登录

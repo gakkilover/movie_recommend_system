@@ -7,10 +7,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @ Author     ：zwk
- * @ Email      ：zwk0@qq.com
- * @ Date       ：Created in 2019-01-25 17:01
- * @ Description：
+ * @author     ：zwk
+ * @email      ：zwk0@qq.com
+ * @date       ：Created in 2019-01-25 17:01
+ * @description：收藏详情实体类（包含观看状态）
  */
 @TableName("collect_detail")
 public class CollectDetailEntity implements Serializable {
@@ -21,6 +21,8 @@ public class CollectDetailEntity implements Serializable {
     private Long userId;
     private Long movieId;
     private Date collectDate;
+    private Integer watchStatus;
+    private Date updateTime;
 
     public Long getCollectDetailId() {
         return collectDetailId;
@@ -52,5 +54,21 @@ public class CollectDetailEntity implements Serializable {
 
     public void setCollectDate(Date collectDate) {
         this.collectDate = collectDate;
+    }
+
+    public Integer getWatchStatus() {
+        return watchStatus;
+    }
+
+    public void setWatchStatus(Integer watchStatus) {
+        this.watchStatus = watchStatus;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
