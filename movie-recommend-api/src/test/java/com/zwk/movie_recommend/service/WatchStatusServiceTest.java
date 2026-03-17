@@ -223,7 +223,7 @@ public class WatchStatusServiceTest {
             List<CollectDetailEntity> mockList = new ArrayList<>();
             mockCollectDetail.setWatchStatus(0);
             mockList.add(mockCollectDetail);
-            
+
             when(collectDetailDao.selectList(any(EntityWrapper.class))).thenReturn(mockList);
             when(movieService.getMovieByMovieid(MOVIE_ID)).thenReturn(mockMovie);
 
@@ -265,7 +265,7 @@ public class WatchStatusServiceTest {
             List<CollectDetailEntity> mockList = new ArrayList<>();
             mockCollectDetail.setWatchStatus(0);
             mockList.add(mockCollectDetail);
-            
+
             when(collectDetailDao.selectList(any(EntityWrapper.class))).thenReturn(mockList);
             when(movieService.getMovieByMovieid(MOVIE_ID)).thenReturn(null);
 
@@ -284,7 +284,7 @@ public class WatchStatusServiceTest {
                 detail.setMovieId((long) (100 + i));
                 mockList.add(detail);
             }
-            
+
             when(collectDetailDao.selectList(any(EntityWrapper.class))).thenReturn(mockList);
             when(movieService.getMovieByMovieid(anyLong())).thenReturn(mockMovie);
 
@@ -304,7 +304,7 @@ public class WatchStatusServiceTest {
             List<CollectDetailEntity> mockList = new ArrayList<>();
             mockCollectDetail.setWatchStatus(1);
             mockList.add(mockCollectDetail);
-            
+
             when(collectDetailDao.selectList(any(EntityWrapper.class))).thenReturn(mockList);
             when(movieService.getMovieByMovieid(MOVIE_ID)).thenReturn(mockMovie);
 
@@ -342,7 +342,7 @@ public class WatchStatusServiceTest {
             List<CollectDetailEntity> mockList = new ArrayList<>();
             mockCollectDetail.setWatchStatus(2);
             mockList.add(mockCollectDetail);
-            
+
             when(collectDetailDao.selectList(any(EntityWrapper.class))).thenReturn(mockList);
             when(movieService.getMovieByMovieid(MOVIE_ID)).thenReturn(mockMovie);
 

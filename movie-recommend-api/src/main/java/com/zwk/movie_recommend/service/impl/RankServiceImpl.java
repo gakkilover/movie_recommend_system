@@ -54,7 +54,10 @@ public class RankServiceImpl extends ServiceImpl<RankDao, RankEntity> implements
         int month = calendar.get(Calendar.MONTH) + 1;
         List<RankEntity> rankList = rankDao.selectMonthlyRank(year, month);
         if (rankList == null || rankList.isEmpty()) {
-            rankList = rankDao.selectLatestMonthlyRank();
+            List<RankEntity> latestList = rankDao.selectLatestMonthlyRank();
+            if (latestList != null && !latestList.isEmpty()) {
+                rankList = latestList;
+            }
         }
         return buildRankResult(rankList);
     }

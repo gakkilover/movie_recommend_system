@@ -45,11 +45,11 @@ public class WatchStatusControllerTest {
     @BeforeEach
     public void setUp() {
         request = new MockHttpServletRequest();
-        
+
         loggedInUser = new UserEntity();
         loggedInUser.setUserId(1L);
         loggedInUser.setUserName("testuser");
-        
+
         successResult = ResultView.ok("操作成功");
         notLoginResult = ResultView.build(401, "请先登录");
         errorResult = ResultView.build(500, "服务器内部错误");

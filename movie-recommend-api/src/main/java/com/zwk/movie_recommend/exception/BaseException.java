@@ -2,6 +2,8 @@ package com.zwk.movie_recommend.exception;
 
 import com.alibaba.fastjson.JSONException;
 import com.zwk.common.constant.Final;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -13,6 +15,8 @@ import java.util.Map;
 
 @ControllerAdvice
 public class BaseException {
+    private static final Logger log = LoggerFactory.getLogger(BaseException.class);
+
     /**
      * 全局异常捕捉处理
      * @param ex
@@ -66,6 +70,7 @@ public class BaseException {
         Map map = new HashMap();
         map.put("code", Final.NULL_ERROE_CODE);
         map.put("msg", "怎么回事？小老弟，空指针了！");
+        log.error("msg is {}", ex.getMessage(), ex);
         return map;
     }
 

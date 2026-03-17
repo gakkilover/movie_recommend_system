@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="163d23e6-c2ea-42db-ae71-2fd31fb9e1a4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/log.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/log.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/dao/RankDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/dao/RankDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/exception/BaseException.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/exception/BaseException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/service/impl/RankServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/service/impl/RankServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/service/impl/WatchStatusServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/service/impl/WatchStatusServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/controller/WatchStatusControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/controller/WatchStatusControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/service/RankServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/service/RankServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/service/WatchStatusServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/movie-recommend-api/src/test/java/com/zwk/movie_recommend/service/WatchStatusServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;gakkilover&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/gakkilover/movie_recommend_system.git&quot;,
+    &quot;accountId&quot;: &quot;6e59b8fd-d49c-4261-a5f9-3bc0742e4a16&quot;
+  }
+}</component>
+  <component name="HttpClientOnboardingState"><![CDATA[{
+  "isOnboardingCommentShown": true
+}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="D:\code\apache-maven-3.5.3" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="3AxmQAOLnaeCt3EBxZrDk9LoWC8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.movie-recommend-system [clean].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.MovieRecommendApiApplication.executor": "Debug",
+    "git-widget-placeholder": "feature-2603",
+    "kotlin-language-version-configured": "true",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Global Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MovieRecommendApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="movie-recommend-api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.zwk.movie_recommend.MovieRecommendApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.31033.145" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.31033.145" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="163d23e6-c2ea-42db-ae71-2fd31fb9e1a4" name="Changes" comment="" />
+      <created>1773542577420</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1773542577420</updated>
+      <workItem from="1773542579023" duration="4012000" />
+      <workItem from="1773590496228" duration="7853000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/movie-recommend-api/src/main/java/com/zwk/movie_recommend/exception/BaseException.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

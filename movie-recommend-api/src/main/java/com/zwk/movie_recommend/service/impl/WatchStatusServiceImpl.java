@@ -2,6 +2,7 @@ package com.zwk.movie_recommend.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.google.common.collect.Lists;
 import com.zwk.common.constant.Final;
 import com.zwk.movie_recommend.common.ResultView;
 import com.zwk.movie_recommend.dao.CollectDetailDao;
@@ -129,7 +130,7 @@ public class WatchStatusServiceImpl extends ServiceImpl<CollectDetailDao, Collec
         EntityWrapper<CollectDetailEntity> wrapper = new EntityWrapper<>();
         wrapper.eq("user_id", userId);
         wrapper.eq("watch_status", watchStatus);
-        wrapper.orderDesc("collect_date");
+        wrapper.orderDesc(Lists.newArrayList("collect_date"));
         List<CollectDetailEntity> list = selectList(wrapper);
 
         List<MovieEntity> movies = new ArrayList<>();

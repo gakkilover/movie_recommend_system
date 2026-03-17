@@ -51,7 +51,7 @@ public interface RankDao extends BaseMapper<RankEntity> {
     /**
      * 获取最新月度榜单
      *
-     * @return 最新月度榜单
+     * @return 最新月度榜单列表
      */
-    RankEntity selectLatestMonthlyRank();
+    List<RankEntity> selectLatestMonthlyRank();
 }

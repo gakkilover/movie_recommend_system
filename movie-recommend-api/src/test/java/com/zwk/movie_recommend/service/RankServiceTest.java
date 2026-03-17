@@ -49,7 +49,7 @@ public class RankServiceTest {
     @BeforeEach
     public void setUp() {
         mockRankList = new ArrayList<>();
-        
+
         mockRankEntity = new RankEntity();
         mockRankEntity.setRankId(1L);
         mockRankEntity.setRankName("Top250");
@@ -57,7 +57,7 @@ public class RankServiceTest {
         mockRankEntity.setMovieId(100L);
         mockRankEntity.setRankPosition(1);
         mockRankList.add(mockRankEntity);
-        
+
         mockMovie = new MovieEntity();
         mockMovie.setMovieId(100L);
         mockMovie.setMovieName("Test Movie");
@@ -72,7 +72,7 @@ public class RankServiceTest {
         @DisplayName("正常获取榜单列表")
         public void testGetRankList_Success() {
             ResultView resultView = rankService.getRankList();
-            
+
             assertNotNull(resultView);
             assertEquals(200, resultView.getStatus());
         }
@@ -81,7 +81,7 @@ public class RankServiceTest {
         @DisplayName("返回数据类型验证")
         public void testGetRankList_DataType() {
             ResultView resultView = rankService.getRankList();
-            
+
             assertTrue(resultView.getData() instanceof ArrayList);
         }
     }
@@ -174,7 +174,7 @@ public class RankServiceTest {
             RankEntity rank = new RankEntity();
             rank.setMovieId(100L);
             topList.add(rank);
-            
+
             when(rankDao.selectTop250()).thenReturn(topList);
             when(movieService.getMovieByMovieid(100L)).thenReturn(mockMovie);
 
@@ -204,7 +204,7 @@ public class RankServiceTest {
             RankEntity rank = new RankEntity();
             rank.setMovieId(999L);
             topList.add(rank);
-            
+
             when(rankDao.selectTop250()).thenReturn(topList);
             when(movieService.getMovieByMovieid(999L)).thenReturn(null);
 
@@ -225,7 +225,7 @@ public class RankServiceTest {
             Calendar cal = Calendar.getInstance();
             int currentYear = cal.get(Calendar.YEAR);
             int currentMonth = cal.get(Calendar.MONTH) + 1;
-            
+
             when(rankDao.selectMonthlyRank(currentYear, currentMonth)).thenReturn(mockRankList);
             when(movieService.getMovieByMovieid(anyLong())).thenReturn(mockMovie);
 
@@ -241,7 +241,7 @@ public class RankServiceTest {
             Calendar cal = Calendar.getInstance();
             int currentYear = cal.get(Calendar.YEAR);
             int currentMonth = cal.get(Calendar.MONTH) + 1;
-            
+
             when(rankDao.selectMonthlyRank(currentYear, currentMonth)).thenReturn(new ArrayList<>());
             when(rankDao.selectLatestMonthlyRank()).thenReturn(mockRankList);
             when(movieService.getMovieByMovieid(anyLong())).thenReturn(mockMovie);
