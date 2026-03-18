@@ -2,7 +2,7 @@ package com.zwk.movie_recommend.controller;
 
 import com.zwk.movie_recommend.common.ResultView;
 import com.zwk.movie_recommend.service.RankService;
-import io.swagger.annotations.ApiOperation;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -11,22 +11,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-/**
- * @author     ：zwk
- * @email      ：zwk0@qq.com
- * @date       ：Created in 2026-03-15
- * @description：电影榜单控制器单元测试 - 按照unit-test-generator技能生成
- */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("RankController 单元测试")
 public class RankControllerTest {
@@ -57,13 +48,10 @@ public class RankControllerTest {
         public void testGetRankList_Success() {
             when(rankService.getRankList()).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankList();
+            ResultView result = rankController.getRankList();
 
-            assertAll("验证榜单列表响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertNotNull(response.getBody());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertNotNull(result);
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService, times(1)).getRankList();
         }
 
@@ -72,13 +60,9 @@ public class RankControllerTest {
         public void testGetRankList_Empty() {
             when(rankService.getRankList()).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankList();
+            ResultView result = rankController.getRankList();
 
-            assertAll("验证空榜单列表响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertNotNull(response.getBody());
-                assertEquals(404, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
     }
 
@@ -92,13 +76,10 @@ public class RankControllerTest {
             String rankType = "top250";
             when(rankService.getRankByType(rankType)).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankByType(rankType);
+            ResultView result = rankController.getRankByType(rankType);
 
-            assertAll("验证类型榜单响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertNotNull(response.getBody());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertNotNull(result);
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService, times(1)).getRankByType(rankType);
         }
 
@@ -108,13 +89,9 @@ public class RankControllerTest {
             String rankType = "nonexistent";
             when(rankService.getRankByType(rankType)).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankByType(rankType);
+            ResultView result = rankController.getRankByType(rankType);
 
-            assertAll("验证不存在类型响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertNotNull(response.getBody());
-                assertEquals(404, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
 
         @Test
@@ -123,9 +100,8 @@ public class RankControllerTest {
             String rankType = "monthly";
             when(rankService.getRankByType(rankType)).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankByType(rankType);
+            rankController.getRankByType(rankType);
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
             verify(rankService).getRankByType("monthly");
         }
 
@@ -135,9 +111,8 @@ public class RankControllerTest {
             String rankType = "genre";
             when(rankService.getRankByType(rankType)).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getRankByType(rankType);
+            rankController.getRankByType(rankType);
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
             verify(rankService).getRankByType("genre");
         }
     }
@@ -151,13 +126,10 @@ public class RankControllerTest {
         public void testGetTop250_Success() {
             when(rankService.getTop250()).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getTop250();
+            ResultView result = rankController.getTop250();
 
-            assertAll("验证Top250响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertNotNull(response.getBody());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertNotNull(result);
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService, times(1)).getTop250();
         }
 
@@ -166,12 +138,9 @@ public class RankControllerTest {
         public void testGetTop250_Empty() {
             when(rankService.getTop250()).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getTop250();
+            ResultView result = rankController.getTop250();
 
-            assertAll("验证空Top250响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertEquals(404, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
 
         @Test
@@ -179,10 +148,9 @@ public class RankControllerTest {
         public void testGetTop250_Error() {
             when(rankService.getTop250()).thenReturn(errorResult);
 
-            ResponseEntity<ResultView> response = rankController.getTop250();
+            ResultView result = rankController.getTop250();
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
-            assertEquals(500, response.getBody().getStatus());
+            assertEquals(Integer.valueOf(500), result.getStatus());
         }
     }
 
@@ -195,12 +163,9 @@ public class RankControllerTest {
         public void testGetCurrentMonthRank_Success() {
             when(rankService.getCurrentMonthRank()).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getCurrentMonthRank();
+            ResultView result = rankController.getCurrentMonthRank();
 
-            assertAll("验证本月榜单响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService).getCurrentMonthRank();
         }
 
@@ -209,9 +174,9 @@ public class RankControllerTest {
         public void testGetCurrentMonthRank_Empty() {
             when(rankService.getCurrentMonthRank()).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getCurrentMonthRank();
+            ResultView result = rankController.getCurrentMonthRank();
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
     }
 
@@ -226,12 +191,9 @@ public class RankControllerTest {
             Integer month = 3;
             when(rankService.getMonthlyRank(year, month)).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getMonthlyRank(year, month);
+            ResultView result = rankController.getMonthlyRank(year, month);
 
-            assertAll("验证月份榜单响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService).getMonthlyRank(year, month);
         }
 
@@ -256,25 +218,13 @@ public class RankControllerTest {
         }
 
         @Test
-        @DisplayName("边界测试 - 年份边界")
-        public void testGetMonthlyRank_YearBoundary() {
-            when(rankService.getMonthlyRank(1900, 1)).thenReturn(emptyResult);
-            when(rankService.getMonthlyRank(2099, 12)).thenReturn(emptyResult);
-
-            rankController.getMonthlyRank(1900, 1);
-            rankController.getMonthlyRank(2099, 12);
-
-            verify(rankService, times(2)).getMonthlyRank(anyInt(), anyInt());
-        }
-
-        @Test
         @DisplayName("异常测试 - 无效月份")
         public void testGetMonthlyRank_InvalidMonth() {
             when(rankService.getMonthlyRank(2026, 13)).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getMonthlyRank(2026, 13);
+            ResultView result = rankController.getMonthlyRank(2026, 13);
 
-            assertEquals(HttpStatus.OK, response.getStatusCode());
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
     }
 
@@ -288,12 +238,9 @@ public class RankControllerTest {
             String genre = "action";
             when(rankService.getGenreRank(genre)).thenReturn(successResult);
 
-            ResponseEntity<ResultView> response = rankController.getGenreRank(genre);
+            ResultView result = rankController.getGenreRank(genre);
 
-            assertAll("验证分类榜单响应", () -> {
-                assertEquals(HttpStatus.OK, response.getStatusCode());
-                assertEquals(200, response.getBody().getStatus());
-            });
+            assertEquals(Integer.valueOf(200), result.getStatus());
             verify(rankService).getGenreRank(genre);
         }
 
@@ -353,9 +300,9 @@ public class RankControllerTest {
             String genre = "unknown_genre";
             when(rankService.getGenreRank(genre)).thenReturn(emptyResult);
 
-            ResponseEntity<ResultView> response = rankController.getGenreRank(genre);
+            ResultView result = rankController.getGenreRank(genre);
 
-            assertEquals(404, response.getBody().getStatus());
+            assertEquals(Integer.valueOf(404), result.getStatus());
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.zwk.movie_recommend.service;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.zwk.movie_recommend.common.ResultView;
 import com.zwk.movie_recommend.dao.RankDao;
 import com.zwk.movie_recommend.entity.MovieEntity;
@@ -11,10 +10,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,12 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
-/**
- * @author     ：zwk
- * @email      ：zwk0@qq.com
- * @date       ：Created in 2026-03-15
- * @description：电影榜单服务单元测试 - 按照unit-test-generator技能生成
- */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("RankService 单元测试")
 public class RankServiceTest {
@@ -39,7 +32,6 @@ public class RankServiceTest {
     @Mock
     private MovieService movieService;
 
-    @InjectMocks
     private RankServiceImpl rankService;
 
     private List<RankEntity> mockRankList;
@@ -47,7 +39,11 @@ public class RankServiceTest {
     private MovieEntity mockMovie;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
+        rankService = new RankServiceImpl();
+        setField(rankService, "rankDao", rankDao);
+        setField(rankService, "movieService", movieService);
+        
         mockRankList = new ArrayList<>();
 
         mockRankEntity = new RankEntity();
@@ -64,6 +60,12 @@ public class RankServiceTest {
         mockMovie.setMovieAverating(8.5);
     }
 
+    private void setField(Object target, String fieldName, Object value) throws Exception {
+        Field field = target.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(target, value);
+    }
+
     @Nested
     @DisplayName("getRankList - 获取榜单列表")
     class GetRankList {
@@ -74,7 +76,7 @@ public class RankServiceTest {
             ResultView resultView = rankService.getRankList();
 
             assertNotNull(resultView);
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -100,7 +102,7 @@ public class RankServiceTest {
 
             assertAll("验证top250榜单", () -> {
                 assertNotNull(resultView);
-                assertEquals(200, resultView.getStatus());
+                assertEquals(Integer.valueOf(200), resultView.getStatus());
             });
             verify(rankDao).selectByRankType("top250");
         }
@@ -113,7 +115,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getRankByType("monthly");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
             verify(rankDao).selectByRankType("monthly");
         }
 
@@ -125,7 +127,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getRankByType("genre");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -137,8 +139,8 @@ public class RankServiceTest {
 
             assertAll("验证空榜单", () -> {
                 assertNotNull(resultView);
-                assertEquals(404, resultView.getStatus());
-                assertEquals("暂无榜单数据", resultView.getMessage());
+                assertEquals(Integer.valueOf(404), resultView.getStatus());
+                assertEquals("暂无榜单数据", resultView.getMsg());
             });
         }
 
@@ -149,7 +151,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getRankByType("nonexistent");
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -159,7 +161,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getRankByType("");
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
     }
 
@@ -182,7 +184,7 @@ public class RankServiceTest {
 
             assertAll("验证Top250", () -> {
                 assertNotNull(resultView);
-                assertEquals(200, resultView.getStatus());
+                assertEquals(Integer.valueOf(200), resultView.getStatus());
             });
             verify(rankDao).selectTop250();
         }
@@ -194,7 +196,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getTop250();
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -211,7 +213,7 @@ public class RankServiceTest {
             ResultView resultView = rankService.getTop250();
 
             assertNotNull(resultView);
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
     }
 
@@ -231,7 +233,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getCurrentMonthRank();
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
             verify(rankDao).selectMonthlyRank(currentYear, currentMonth);
         }
 
@@ -249,7 +251,7 @@ public class RankServiceTest {
             ResultView resultView = rankService.getCurrentMonthRank();
 
             assertAll("验证使用最新数据", () -> {
-                assertEquals(200, resultView.getStatus());
+                assertEquals(Integer.valueOf(200), resultView.getStatus());
                 verify(rankDao).selectLatestMonthlyRank();
             });
         }
@@ -262,7 +264,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getCurrentMonthRank();
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
     }
 
@@ -280,7 +282,7 @@ public class RankServiceTest {
 
             assertAll("验证月份榜单", () -> {
                 assertNotNull(resultView);
-                assertEquals(200, resultView.getStatus());
+                assertEquals(Integer.valueOf(200), resultView.getStatus());
             });
             verify(rankDao).selectMonthlyRank(2026, 3);
         }
@@ -293,7 +295,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(2026, 1);
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -304,7 +306,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(2026, 12);
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -314,7 +316,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(1900, 1);
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -324,7 +326,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(2099, 12);
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -334,7 +336,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(2026, 0);
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -344,7 +346,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getMonthlyRank(2026, 13);
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
     }
 
@@ -362,7 +364,7 @@ public class RankServiceTest {
 
             assertAll("验证分类榜单", () -> {
                 assertNotNull(resultView);
-                assertEquals(200, resultView.getStatus());
+                assertEquals(Integer.valueOf(200), resultView.getStatus());
             });
             verify(rankDao).selectGenreRank("action");
         }
@@ -375,7 +377,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("action");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -386,7 +388,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("comedy");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -397,7 +399,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("drama");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -408,7 +410,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("horror");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -419,7 +421,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("sci-fi");
 
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
 
         @Test
@@ -429,7 +431,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("");
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -439,7 +441,7 @@ public class RankServiceTest {
 
             ResultView resultView = rankService.getGenreRank("unknown");
 
-            assertEquals(404, resultView.getStatus());
+            assertEquals(Integer.valueOf(404), resultView.getStatus());
         }
 
         @Test
@@ -451,7 +453,7 @@ public class RankServiceTest {
             ResultView resultView = rankService.getGenreRank("action");
 
             assertNotNull(resultView);
-            assertEquals(200, resultView.getStatus());
+            assertEquals(Integer.valueOf(200), resultView.getStatus());
         }
     }
 }
