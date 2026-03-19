@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -133,12 +134,7 @@ public class MovieServiceImpl extends ServiceImpl<MovieDao, MovieEntity> impleme
 
     @Override
     public List<MovieEntity> getAllMovie() {
-        List<MovieEntity> movieList = movieDao.getAllMovie();
-//        for (MovieEntity movie : movieList) {
-//            double sumRate = movie.getMovieAverating()*movie.getMovieRateNum();
-//            movie.setSumRate(sumRate);
-//        }
-        return  movieList;
+        return movieDao.getAllMovie();
     }
 
     @Override
@@ -167,32 +163,5 @@ public class MovieServiceImpl extends ServiceImpl<MovieDao, MovieEntity> impleme
         // 简化处理：直接返回空列表，实际应用中应该调用TagService获取标签ID
         // 由于这是演示代码，这里返回空列表
         return new ArrayList<>();
-    }
-}
-
-    @Override
-    public List<MovieEntity> getAllMovie() {
-        List<MovieEntity> movieList = movieDao.getAllMovie();
-//        for (MovieEntity movie : movieList) {
-//            double sumRate = movie.getMovieAverating()*movie.getMovieRateNum();
-//            movie.setSumRate(sumRate);
-//            movieDao.updateById(movie);
-//        }
-        return  movieList;
-    }
-
-    @Override
-    public void updateMovieRate(Long movieId, double star) {
-        MovieEntity movie = movieDao.getByMovieId(movieId);
-        if(movie != null){
-            double sumRate = movie.getSumRate()+star;
-            Long movieRateNum = movie.getMovieRateNum()+1L;
-            double averating = sumRate/(double)(movieRateNum);
-            averating = (double) Math.round(averating * 100) / 100;
-            movie.setSumRate(sumRate);
-            movie.setMovieAverating(averating);
-            movie.setMovieRateNum(movie.getMovieRateNum()+1);
-            movieDao.updateById(movie);
-        }
     }
 }
