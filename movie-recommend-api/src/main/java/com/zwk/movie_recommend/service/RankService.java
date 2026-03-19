@@ -59,4 +59,20 @@ public interface RankService extends IService<RankEntity> {
      * @return 分类榜单列表
      */
     ResultView getGenreRank(String genre);
+
+    /**
+     * 保存单个榜单数据
+     *
+     * @param rankEntity 榜单实体
+     * @return 保存结果
+     */
+    ResultView saveRank(RankEntity rankEntity);
+
+    /**
+     * 批量保存榜单数据
+     *
+     * @param rankList 榜单列表
+     * @return 保存结果
+     */
+    ResultView saveRankList(List<RankEntity> rankList);
 }

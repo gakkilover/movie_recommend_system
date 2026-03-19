@@ -60,4 +60,14 @@ public interface MovieDao extends BaseMapper<MovieEntity> {
 
     @Select(" select * from movie where 1=1 ")
     List<MovieEntity> getAllMovie();
+
+    /**
+     * 根据标签ID获取电影列表
+     * @param tagId 标签ID
+     * @return 电影列表
+     */
+    @Select(" SELECT m.* FROM movie m " +
+            " LEFT JOIN movie_tag_relation mtr ON m.movie_id = mtr.movie_id " +
+            " WHERE mtr.tag_id = #{tagId} ")
+    List<MovieEntity> getMovieByTagId(@Param("tagId") Long tagId);
 }

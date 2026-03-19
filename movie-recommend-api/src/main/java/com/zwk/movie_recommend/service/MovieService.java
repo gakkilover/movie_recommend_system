@@ -50,4 +50,18 @@ public interface MovieService extends IService<MovieEntity> {
     List<MovieEntity> getAllMovie();
 
     void updateMovieRate(Long movieId,double star);
+
+    /**
+     * 根据标签ID获取电影列表
+     * @param tagId 标签ID
+     * @return 电影列表
+     */
+    List<MovieEntity> getMovieByTagId(Long tagId);
+
+    /**
+     * 根据标签名称获取电影列表
+     * @param tagName 标签名称
+     * @return 电影列表
+     */
+    List<MovieEntity> getMovieByTagName(String tagName);
 }

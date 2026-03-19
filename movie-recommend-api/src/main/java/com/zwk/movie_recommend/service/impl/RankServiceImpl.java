@@ -15,25 +15,30 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-/**
- * @author     ：zwk
- * @email      ：zwk0@qq.com
- * @date       ：Created in 2026-03-15
- * @description：电影榜单服务实现类
- */
-@Service
-public class RankServiceImpl extends ServiceImpl<RankDao, RankEntity> implements RankService {
+    /**
+     * 获取分类榜单
+     *
+     * @param genre 电影分类
+     * @return 分类榜单列表
+     */
+    ResultView getGenreRank(String genre);
 
-    @Autowired
-    private RankDao rankDao;
+    /**
+     * 保存单个榜单数据
+     *
+     * @param rankEntity 榜单实体
+     * @return 保存结果
+     */
+    ResultView saveRank(RankEntity rankEntity);
 
-    @Autowired
-    private MovieService movieService;
-
-    @Override
-    public ResultView getRankList() {
-        return ResultView.ok(new ArrayList<>());
-    }
+    /**
+     * 批量保存榜单数据
+     *
+     * @param rankList 榜单列表
+     * @return 保存结果
+     */
+    ResultView saveRankList(List<RankEntity> rankList);
+}
 
     @Override
     public ResultView getRankByType(String rankType) {
@@ -72,6 +77,18 @@ public class RankServiceImpl extends ServiceImpl<RankDao, RankEntity> implements
     public ResultView getGenreRank(String genre) {
         List<RankEntity> rankList = rankDao.selectGenreRank(genre);
         return buildRankResult(rankList);
+    }
+
+    @Override
+    public ResultView saveRank(RankEntity rankEntity) {
+        int result = rankDao.insertRank(rankEntity);
+        return result > 0 ? ResultView.ok() : ResultView.build(500, "保存排名失败");
+    }
+
+    @Override
+    public ResultView saveRankList(List<RankEntity> rankList) {
+        int result = rankDao.insertBatchRank(rankList);
+        return result > 0 ? ResultView.ok() : ResultView.build(500, "批量保存排名失败");
     }
 
     private ResultView buildRankResult(List<RankEntity> rankList) {
